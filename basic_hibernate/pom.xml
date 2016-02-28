@@ -9,9 +9,7 @@
 	<relativePath>../cms_parent/pom.xml</relativePath>
 </parent>
 
-  <groupId>com.jolo</groupId>
   <artifactId>basic_hibernate</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>basic_hibernate</name>

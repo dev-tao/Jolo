@@ -54,7 +54,7 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public List<T> list(String hql,Object[] args,Map<String,Object> alias);
-	public List<T>list(String hql,Map<String,Object> alias);
+	public List<T>listByAlias(String hql,Map<String,Object> alias);
 	
 	
 	/**
@@ -76,7 +76,7 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public Pager<T> find(String hql,Object[] args,Map<String,Object> alias);
-	public Pager<T>find(String hql,Map<String,Object> alias);
+	public Pager<T>findByAlias(String hql,Map<String,Object> alias);
 	
 	/**
 	 * 根据hql查询一组对象
@@ -109,7 +109,7 @@ public interface IBaseDao<T> {
 	public List<T> listBySql(String sql,Object[] args,Class<T> clz,boolean hasEntity);
 	public List<T> listBySql(String sql,Object  arg,Class<T> clz,boolean hasEntity);
 	public List<T> listBySql(String sql,Class<T> clz,boolean hasEntity);
-	public List<T> listBySql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
+	public List<T> listByAliasSql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
 	public List<T> listBySql(String sql,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
 	
 	/**
@@ -123,7 +123,7 @@ public interface IBaseDao<T> {
 	public Pager<T> findBySql(String sql,Object[] args,Class<T> clz,boolean hasEntity);
 	public Pager<T> findBySql(String sql,Object  arg,Class<T> clz,boolean hasEntity);
 	public Pager<T> findBySql(String sql,Class<T> clz,boolean hasEntity);
-	public Pager<T> findBySql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
+	public Pager<T> findByAliasSql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
 	public Pager<T> findBySql(String sql,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
 	
 	
