@@ -84,9 +84,12 @@ public interface IBaseDao<T> {
 	 * @param args
 	 * @return
 	 */
-	public Object querObject(String hql,Object[] args);
-	public Object querObject(String hql,Object arg);
-	public Object querObject(String hql);
+	public Object queryObject(String hql,Object[] args);
+	public Object queryObject(String hql,Object arg);
+	public Object queryObject(String hql);
+	public Object queryObject(String hql,Object[] args,Map<String,Object> alias);
+	public Object queryObjectByAlias(String hql,Map<String,Object> alias);
+	
 	
 	/**
 	 * 根据hql更新一组对象
@@ -94,9 +97,9 @@ public interface IBaseDao<T> {
 	 * @param args
 	 * @return
 	 */
-	public Object updateObject(String hql,Object[] args);
-	public Object updateObject(String hql,Object arg);
-	public Object updateObject(String hql);
+	public void updateByHql(String hql,Object[] args);
+	public void updateByHql(String hql,Object arg);
+	public void updateByHql(String hql);
 	
 	/**
 	 * 根据Sql查询对象，不包含关联对象
@@ -106,11 +109,11 @@ public interface IBaseDao<T> {
 	 * @param hasEntity 该对象是否是由hibernate管理的实体对象，如果不是使用setResultTransForm查询
 	 * @return
 	 */
-	public List<T> listBySql(String sql,Object[] args,Class<T> clz,boolean hasEntity);
-	public List<T> listBySql(String sql,Object  arg,Class<T> clz,boolean hasEntity);
-	public List<T> listBySql(String sql,Class<T> clz,boolean hasEntity);
-	public List<T> listByAliasSql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
-	public List<T> listBySql(String sql,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
+	public List<Object> listBySql(String sql,Object[] args,Class<Object> clz,boolean hasEntity);
+	public List<Object> listBySql(String sql,Object  arg,Class<Object> clz,boolean hasEntity);
+	public List<Object> listBySql(String sql,Class<Object> clz,boolean hasEntity);
+	public List<Object> listBySql(String sql,Object[] args,Map<String,Object> alias ,Class<Object> clz,boolean hasEntity);
+	public List<Object> listByAliasSql(String sql,Map<String,Object> alias ,Class<Object> clz,boolean hasEntity);
 	
 	/**
 	 * 根据Sql查询分页对象，不包含关联对象
@@ -120,11 +123,11 @@ public interface IBaseDao<T> {
 	 * @param hasEntity 该对象是否是由hibernate管理的实体对象，如果不是使用setResultTransForm查询
 	 * @return
 	 */
-	public Pager<T> findBySql(String sql,Object[] args,Class<T> clz,boolean hasEntity);
-	public Pager<T> findBySql(String sql,Object  arg,Class<T> clz,boolean hasEntity);
-	public Pager<T> findBySql(String sql,Class<T> clz,boolean hasEntity);
-	public Pager<T> findByAliasSql(String sql,Object[] args,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
-	public Pager<T> findBySql(String sql,Map<String,Object> alias ,Class<T> clz,boolean hasEntity);
+	public Pager<Object> findBySql(String sql,Object[] args,Class<Object> clz,boolean hasEntity);
+	public Pager<Object> findBySql(String sql,Object  arg,Class<Object> clz,boolean hasEntity);
+	public Pager<Object> findBySql(String sql,Class<Object> clz,boolean hasEntity);
+	public Pager<Object> findBySql(String sql,Object[] args,Map<String,Object> alias ,Class<Object> clz,boolean hasEntity);
+	public Pager<Object> findByAliasSql(String sql,Map<String,Object> alias ,Class<Object> clz,boolean hasEntity);
 	
 	
 	
