@@ -17,7 +17,7 @@ public class EntitiesHelper {
 	public static void assertUser(User expected,User actual) {
 		Assert.assertNotNull(expected);
 		Assert.assertEquals(expected.getId(), actual.getId());
-		Assert.assertEquals(expected.getUserName(), actual.getUserName());
+		Assert.assertEquals(expected.getUsername(), actual.getUsername());
 	}
 	
 	public static void assertUsers(List<User> expected,List<User> actuals) {

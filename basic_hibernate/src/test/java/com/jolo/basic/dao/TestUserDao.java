@@ -23,7 +23,7 @@ import com.jolo.basic.test.util.EntitiesHelper;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("beans.xml")
+@ContextConfiguration(locations={"/beans.xml"})
 public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Inject

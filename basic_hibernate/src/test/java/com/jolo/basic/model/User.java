@@ -5,23 +5,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name="t_user")
 public class User {
 	private int id;
-	private String userName;
+	private String username;
 	
-	
-	public User(){
-		
+	public User() {
 	}
 	
-
-	public User(int id, String userName) {
+	public User(int id, String username) {
 		super();
 		this.id = id;
-		this.userName = userName;
+		this.username = username;
 	}
 
 	@Id
@@ -32,10 +28,12 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+	
+	
 }
