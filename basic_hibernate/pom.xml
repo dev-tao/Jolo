@@ -11,8 +11,5 @@
 
   <artifactId>basic_hibernate</artifactId>
   <packaging>jar</packaging>
-
-  <name>basic_hibernate</name>
-  <url>http://maven.apache.org</url>
-
+  
 </project>
