@@ -21,12 +21,14 @@ public class BaseDao<T>  implements IBaseDao<T>{
 	
 	/**
 	 * 创建一个class的对象，来获取泛型的class
-	 */
-	private Class<T> clz;
+	 */	
+private Class<T> clz;
 	
-	public Class<T> getClz(){
-		if(clz==null){
-			clz =  ((Class<T>)(((ParameterizedType)(this.getClass().getGenericSuperclass())).getActualTypeArguments()).getClass());
+	public Class<T> getClz() {
+		if(clz==null) {
+			//获取泛型的Class对象
+			clz = ((Class<T>)
+					(((ParameterizedType)(this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]));
 		}
 		return clz;
 	}

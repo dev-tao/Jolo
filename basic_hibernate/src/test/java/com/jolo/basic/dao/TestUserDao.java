@@ -31,19 +31,20 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Before
 	public void setUp() throws DataSetException, SQLException, IOException{
-		this.backupAllTable();
+		//backupAllTable();
 	}
 	
 	@After
 	public void tearDown() throws FileNotFoundException, DatabaseUnitException, SQLException{
-		this.resumeTable();
+		//this.resumeTable();
 	}
 	
 	@Test
 	public void testLoad() throws DatabaseUnitException, SQLException{
 		IDataSet ds = createDateSet("t_user");
 		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		User u = userDao.load(1);
+		
+		User u = (User)userDao.load(1);
 		EntitiesHelper.assertUser(u);
 		
 	}
