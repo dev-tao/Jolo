@@ -1,16 +1,20 @@
 package com.jolo.basic.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.inject.Inject;
+
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
+
 import com.jolo.basic.model.PageContext;
 import com.jolo.basic.model.Pager;
 
@@ -238,22 +242,22 @@ private Class<T> clz;
 		this.updateByHql(hql, null);
 	}
 	@Override
-	public List<Object> listBySql(String sql, Object[] args, Class<Object> clz,
+	public <N extends Object>List<N> listBySql(String sql, Object[] args, Class<?> clz,
 			boolean hasEntity) {
 		return this.listBySql(sql, args, null, clz, hasEntity);
 	}
 	@Override
-	public List<Object> listBySql(String sql, Object arg, Class<Object> clz,
+	public <N extends Object>List<N> listBySql(String sql, Object arg, Class<?> clz,
 			boolean hasEntity) {
 		return this.listBySql(sql, new Object[]{arg}, clz, hasEntity);
 	}
 	@Override
-	public List<Object> listBySql(String sql, Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>List<N> listBySql(String sql, Class<?> clz, boolean hasEntity) {
 		return this.listBySql(sql, null, clz, hasEntity);
 	}
 	@Override
-	public List<Object> listBySql(String sql, Object[] args,
-			Map<String, Object> alias, Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>List<N> listBySql(String sql, Object[] args,
+			Map<String, Object> alias, Class<?> clz, boolean hasEntity) {
 		sql = initSort(sql);
 		SQLQuery sq = getSession().createSQLQuery(sql);
 		setAliasParameter(sq, alias);
@@ -266,50 +270,53 @@ private Class<T> clz;
 		return sq.list();
 	}
 	@Override
-	public List<Object> listByAliasSql(String sql, Map<String, Object> alias,
-			Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>List<N> listByAliasSql(String sql, Map<String, Object> alias,
+			Class<?> clz, boolean hasEntity) {
 		return this.listBySql(sql, null, alias, clz, hasEntity);
 	}
 	@Override
-	public Pager<Object> findBySql(String sql, Object[] args, Class<Object> clz,
+	public <N extends Object>Pager<N> findBySql(String sql, Object[] args, Class<?> clz,
 			boolean hasEntity) {
 		return this.findBySql(sql, args, null, clz, hasEntity);
 	}
 	@Override
-	public Pager<Object> findBySql(String sql, Object arg, Class<Object> clz,
+	public <N extends Object>Pager<N> findBySql(String sql, Object arg, Class<?> clz,
 			boolean hasEntity) {
 		return this.findBySql(sql, new Object[]{arg}, clz, hasEntity);
 	}
 	@Override
-	public Pager<Object> findBySql(String sql, Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>Pager<N> findBySql(String sql, Class<?> clz, boolean hasEntity) {
 		return this.findBySql(sql, null, clz, hasEntity);
 	}
 	@Override
-	public Pager<Object> findBySql(String sql, Object[] args,
-			Map<String, Object> alias, Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>Pager<N> findBySql(String sql, Object[] args,
+			Map<String, Object> alias, Class<?> clz, boolean hasEntity) {
 		
 		String cq = getCountHql(sql, false);
-		cq = initSort(cq);
 		sql = initSort(sql);
-		SQLQuery sq = getSession().createSQLQuery(cq);
+		SQLQuery cquery = getSession().createSQLQuery(cq);
 		SQLQuery squery= getSession().createSQLQuery(sql);
-		setAliasParameter(sq, alias);
+		setAliasParameter(cquery, alias);
 		setAliasParameter(squery, alias);
-		setParameter(sq, args);
+		setParameter(cquery, args);
 		setParameter(squery, args);
-		Pager<Object> pages = new Pager<Object>();
-		setPagers(sq, pages);
+		Pager<N> pages = new Pager<N>();
+		setPagers(squery, pages);
 		if(hasEntity){
-			sq.addEntity(clz);
+			squery.addEntity(clz);
 		}else{
-			sq.setResultTransformer(Transformers.aliasToBean(clz));
+			squery.setResultTransformer(Transformers.aliasToBean(clz));
 		}
+		List<N> datas = squery.list();
+		pages.setDatas(datas);
+		long total = ((BigInteger)cquery.uniqueResult()).longValue();
+		pages.setTotal(total);
 		return pages;
 
 	}
 	@Override
-	public Pager<Object> findByAliasSql(String sql, Map<String, Object> alias,
-			Class<Object> clz, boolean hasEntity) {
+	public <N extends Object>Pager<N>findByAliasSql(String sql, Map<String, Object> alias,
+			Class<?> clz, boolean hasEntity) {
 		return this.findBySql(sql, null, alias, clz, hasEntity);
 	}
 
