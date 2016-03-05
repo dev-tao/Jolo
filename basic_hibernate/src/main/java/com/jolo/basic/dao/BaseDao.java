@@ -42,7 +42,7 @@ private Class<T> clz;
 		this.sessionFactory = sessionFactory;
 	}
 	protected Session getSession(){
-		return sessionFactory.openSession();
+		return sessionFactory.getCurrentSession();
 	}
 	
 	@Override
@@ -167,7 +167,7 @@ private Class<T> clz;
 	
 	private String getCountHql(String hql,boolean isHql){
 		String sql = hql.substring(hql.indexOf("from"));
-		String c = "select count(1) "+sql;
+		String c = "select count(*) "+sql;
 		if(isHql) c.replaceAll("fetch","");
 		return c;
 	}
