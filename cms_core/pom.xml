@@ -12,9 +12,12 @@
   <artifactId>cms_core</artifactId>
   <packaging>jar</packaging>
 
-
-
-
-
+<dependencies>
+    <dependency>
+      <groupId>com.jolo</groupId>
+      <artifactId>basic_hibernate</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+   </dependencies>
 
 </project>
