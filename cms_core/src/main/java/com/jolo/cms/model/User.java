@@ -45,7 +45,7 @@ public class User {
 	private Date createDate;
 	
 	public User(int id, String username, String password, String nickname,
-			String email, String phone, int status, Date createDate) {
+			String email, String phone, int status) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -54,7 +54,6 @@ public class User {
 		this.email = email;
 		this.phone = phone;
 		this.status = status;
-		this.createDate = createDate;
 	}
 	
 	@Id

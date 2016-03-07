@@ -1,4 +1,4 @@
-package com.jolo.basic.dao;
+package com.jolo.basic.test.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import com.jolo.basic.model.PageContext;
 import com.jolo.basic.model.Pager;
-import com.jolo.basic.model.User;
+import com.jolo.basic.test.model.User;
 import com.jolo.basic.test.util.AbstractDbUnitTestCase;
 import com.jolo.basic.test.util.EntitiesHelper;
 

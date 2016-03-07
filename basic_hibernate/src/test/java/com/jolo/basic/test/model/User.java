@@ -1,4 +1,4 @@
-package com.jolo.basic.model;
+package com.jolo.basic.test.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

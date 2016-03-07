@@ -1,5 +1,6 @@
 package com.jolo.cms.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,7 +30,7 @@ public class Role {
 	 */
 	private RoleType roleType;
 	
-	public Role(int id, String name, RoleType roleType) {
+	public Role(int id, String name,RoleType roleType) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -55,6 +56,7 @@ public class Role {
 	}
 
 	@Enumerated(EnumType.ORDINAL)
+	@Column(name="role_type")
 	public RoleType getRoleType() {
 		return roleType;
 	}

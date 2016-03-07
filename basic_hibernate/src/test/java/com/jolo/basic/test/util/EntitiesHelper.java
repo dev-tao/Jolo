@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import com.jolo.basic.dao.UserDao;
-import com.jolo.basic.model.User;
+import com.jolo.basic.test.dao.UserDao;
+import com.jolo.basic.test.model.User;
 
 
 public class EntitiesHelper {
