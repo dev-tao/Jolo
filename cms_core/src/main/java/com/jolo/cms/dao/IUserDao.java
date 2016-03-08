@@ -2,6 +2,8 @@ package com.jolo.cms.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.jolo.basic.dao.IBaseDao;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
@@ -10,6 +12,7 @@ import com.jolo.cms.model.User;
 import com.jolo.cms.model.UserGroup;
 import com.jolo.cms.model.UserRole;
 
+@Repository
 public interface IUserDao extends IBaseDao<User>{
 	
 	/**

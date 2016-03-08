@@ -46,7 +46,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 设置Spring取那个包中查找相应的实体类 -->
 		<property name="packagesToScan">
-			<value>com.jolo.basic.model</value>
+			<value>com.jolo.basic.test.model</value>
 		</property>
 		<property name="hibernateProperties">
 			<!-- <value> hibernate.dialect=org.hibernate.dialect.HSQLDialect </value> -->
