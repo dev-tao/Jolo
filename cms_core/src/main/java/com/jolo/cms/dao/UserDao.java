@@ -2,6 +2,8 @@ package com.jolo.cms.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.jolo.basic.dao.BaseDao;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
@@ -11,6 +13,7 @@ import com.jolo.cms.model.UserGroup;
 import com.jolo.cms.model.UserRole;
 
 @SuppressWarnings("unchecked")
+@Repository("userDao")
 public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override

@@ -12,7 +12,7 @@ import com.jolo.cms.model.User;
 import com.jolo.cms.model.UserGroup;
 import com.jolo.cms.model.UserRole;
 
-@Repository
+
 public interface IUserDao extends IBaseDao<User>{
 	
 	/**
