@@ -1,6 +1,3 @@
 # Jolo
-A simple and fast cms for personal developer
-
-test
-
-今天有些事情忘了提交
+一个小项目简单快速的CMS 用来帮助有Java基础的朋友搭建小网站
+目前正在开发中 雏形还没出
