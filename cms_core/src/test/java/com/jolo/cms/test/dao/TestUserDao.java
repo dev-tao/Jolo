@@ -47,7 +47,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	public void setUp() throws DataSetException, SQLException, IOException{
 		Session s = sessionFactory.openSession();  //打开一个新的session
 		TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(s));  //将session绑定到事务异步管理器中 
-		backupAllTable();
+		//backupAllTable();
 	}
 	
 	@After
@@ -61,7 +61,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListUserRoles() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("t_user");
+		IDataSet ds = createDateSet("dataset");
 		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
 		
 		List<Role> roles = userDao.listUserRoles(2);
