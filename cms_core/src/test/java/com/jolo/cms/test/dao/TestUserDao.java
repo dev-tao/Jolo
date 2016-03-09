@@ -47,7 +47,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	public void setUp() throws DataSetException, SQLException, IOException{
 		Session s = sessionFactory.openSession();  //打开一个新的session
 		TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(s));  //将session绑定到事务异步管理器中 
-		//backupAllTable();
+		backupAllTable();
 	}
 	
 	@After

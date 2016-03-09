@@ -30,6 +30,9 @@ public class Role {
 	 */
 	private RoleType roleType;
 	
+	public Role() {
+	}
+
 	public Role(int id, String name,RoleType roleType) {
 		super();
 		this.id = id;

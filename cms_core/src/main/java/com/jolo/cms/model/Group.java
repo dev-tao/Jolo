@@ -24,14 +24,14 @@ public class Group {
 	/**
 	 * 组描述
 	 */
-	private String desc;
+	private String description;
 	
 	
 	public Group(int id, String name, String desc) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.desc = desc;
+		this.description = desc;
 	}
 	
 	@Id
@@ -48,11 +48,11 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 	
 }
