@@ -56,7 +56,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Session s = holder.getSession(); 
 		s.flush();
 		TransactionSynchronizationManager.unbindResource(sessionFactory);//从事务管理器中获取session  并刷新session
-		this.resumeTable();
+	     this.resumeTable();
 	}
 	
 	@Test
