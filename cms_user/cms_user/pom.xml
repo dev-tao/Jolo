@@ -2,6 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>cms.jolo</groupId>
+  <artifactId>cms_user</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+
 <parent>
 	<groupId>com.jolo</groupId>
 	<artifactId>cms_parent</artifactId>
@@ -9,16 +15,19 @@
 	<relativePath>../cms_parent/pom.xml</relativePath>
 </parent>
 
-  <artifactId>cms_core</artifactId>
-   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
 <dependencies>
     <dependency>
       <groupId>com.jolo</groupId>
       <artifactId>basic_hibernate</artifactId>
       <version>0.0.1</version>
     </dependency>
+    
+     <dependency>
+      <groupId>com.jolo</groupId>
+      <artifactId>cms_core</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    
    </dependencies>
 
 </project>
