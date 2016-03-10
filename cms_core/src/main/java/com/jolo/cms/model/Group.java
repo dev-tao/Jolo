@@ -27,8 +27,11 @@ public class Group {
 	private String description;
 	
 	
+	public Group(){
+		
+	}
+	
 	public Group(int id, String name, String desc) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.description = desc;

@@ -58,7 +58,7 @@ public class Role {
 		this.name = name;
 	}
 
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name="role_type")
 	public RoleType getRoleType() {
 		return roleType;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Assert;
 
 import com.jolo.cms.dao.UserDao;
+import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
 import com.jolo.cms.model.User;
 
@@ -25,10 +26,10 @@ public class EntitiesHelper {
 		Assert.assertEquals(expected.getStatus(),actual.getStatus());
 	}
 	
-	public static void assertUsers(List<User> expected,List<User> actuals) {
+	public static void assertUsers(List<User> expected,List<User> actual) {
 		for(int i=0;i<expected.size();i++) {
 			User eu = expected.get(i);
-			User au = actuals.get(i);
+			User au = actual.get(i);
 			assertUser(eu, au);
 		}
 	}
@@ -53,6 +54,20 @@ public class EntitiesHelper {
 		}
 	}
 	
+
+	public static void assertGroup(Group expected,Group actual){
+		Assert.assertNotNull(expected);
+		Assert.assertEquals(expected.getId(), actual.getId());
+		Assert.assertEquals(expected.getName(),actual.getName());
+		Assert.assertEquals(expected.getDescription(),actual.getDescription());
+	}
 	
+	public static void assertGroups(List<Group> expected,List<Group> acutal){
+		for(int i = 0;i<expected.size();i++){
+			Group eg = expected.get(i);
+			Group ag = expected.get(i);
+			assertGroup(eg, ag);
+		}
+	}
 	
 }

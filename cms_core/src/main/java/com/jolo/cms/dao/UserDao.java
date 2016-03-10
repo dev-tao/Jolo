@@ -24,13 +24,13 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public List<Integer> listUserRolesId(int userId) {
-		String hql = "select ru.role.id from UserRole ur where ur.user.id=?";
+		String hql = "select ur.role.id from UserRole ur where ur.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0, userId).list();
 	}
 
 	@Override
 	public List<Group> listUserGroups(int userId) {
-		String hql = "select ug.group from UserGroup ug wehre ug.user.id=?";
+		String hql = "select ug.group from UserGroup ug where ug.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0, userId).list();
 	}
 
@@ -61,7 +61,7 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public List<User> listRoleUsers(int roleId) {
-		String hql = "select ur.user from UserRole ur wehre ur.role.id=?";
+		String hql = "select ur.user from UserRole ur where ur.role.id=?";
 		return this.list(hql, roleId);
 	}
 
@@ -73,20 +73,10 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public List<User> listGroupUsers(int groupId) {
-		String hql = "select ug.user from UserGroup ug wehre ug.group.id=?";
+		String hql = "select ug.user from UserGroup ug where ug.group.id=?";
 		return this.list(hql,groupId);
 	}
 
-	@Override
-	public void add(User user, Integer[] roleIds, Integer[] groupIds) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void update(User user, Integer[] roleIds, Integer[] groupIds) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

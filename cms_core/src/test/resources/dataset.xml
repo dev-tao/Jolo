@@ -8,9 +8,9 @@
 	<t_group id="2"  name="计科系" description="负责计科系网站"/>
 	<t_group id="3"  name="宣传部" description="负责宣传部网站"/>
 	
-	<t_role id="1" name="管理员" role_type="0"/>
-	<t_role id="2" name="发布人" role_type="1"/>
-	<t_role id="3" name="审核人" role_type="2"/>
+	<t_role id="1" name="管理员" role_type="ROLE_ADMIN"/>
+	<t_role id="2" name="发布人" role_type="ROLE_PUBLISH"/>
+	<t_role id="3" name="审核人" role_type="ROLE_AUDIT"/>
 	
 	<t_user_role id="1" u_id="1" r_id="1"/>
 	<t_user_role id="2" u_id="2" r_id="2"/>
