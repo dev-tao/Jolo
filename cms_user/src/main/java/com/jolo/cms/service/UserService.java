@@ -1,6 +1,9 @@
 package com.jolo.cms.service;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +11,7 @@ import com.jolo.basic.model.Pager;
 import com.jolo.cms.dao.IGroupDao;
 import com.jolo.cms.dao.IRoleDao;
 import com.jolo.cms.dao.IUserDao;
+import com.jolo.cms.model.CmsException;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
 import com.jolo.cms.model.User;
@@ -16,16 +20,43 @@ import com.jolo.cms.model.User;
 @Service("userService")
 public class UserService implements IUserService {
 	
+	@Inject
 	private IUserDao userDao;
+	@Inject
 	private IRoleDao roleDao;
+	@Inject
 	private IGroupDao groupDao;
 	
-	
-	
+	public IUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	public IRoleDao getRoleDao() {
+		return roleDao;
+	}
+
+	public void setRoleDao(IRoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	public IGroupDao getGroupDao() {
+		return groupDao;
+	}
+
+	public void setGroupDao(IGroupDao groupDao) {
+		this.groupDao = groupDao;
+	}
+
 	@Override
 	public void add(User user, Integer[] rids, Integer[] gids) {
-		// TODO Auto-generated method stub
+		User tmpUser = userDao.loadByUsername(user.getUsername());
+		if (tmpUser!=null) throw new CmsException("添加的用户对象已经存在，不能添加");
 
+		
 	}
 
 	@Override
