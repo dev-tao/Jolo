@@ -23,63 +23,6 @@ public class BaseDao<T>  implements IBaseDao<T>{
 
 	private SessionFactory sessionFactory;
 	
-	/**
-	 * 创建一个class的对象，来获取泛型的class
-	 */	
-private Class<T> clz;
-	
-	public Class<T> getClz() {
-		if(clz==null) {
-			//获取泛型的Class对象
-			clz = ((Class<T>)
-					(((ParameterizedType)(this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]));
-		}
-		return clz;
-	}
-	
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	@Inject
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	protected Session getSession(){
-		return sessionFactory.getCurrentSession();
-	}
-	
-	@Override
-	public T add(T t) {
-		getSession().save(t);
-		return t;
-	}
-
-	@Override
-	public void delete(int id) {
-		getSession().delete(this.load(id));
-		
-	}
-	@Override
-	public void update(T t) {
-		getSession().update(t);
-	}
-	@Override
-	public T load(int id) {
-		return (T)getSession().load(getClz(),id);
-	}
-	@Override
-	public List<T> list(String hql, Object[] args) {
-		return this.list(hql, args, null);
-	}
-	@Override
-	public List<T> list(String hql) {
-		return this.list(hql, null);
-	}
-	@Override
-	public List<T> list(String hql, Object arg) {
-		return this.list(hql, new Object[] {arg});
-	}
 	
 	/**
 	 * 初始化hql
@@ -131,7 +74,78 @@ private Class<T> clz;
 		}
 	}
 	
+	
+	/**
+	 * 创建一个class的对象，来获取泛型的class
+	 */	
+private Class<T> clz;
+	
+	public Class<T> getClz() {
+		if(clz==null) {
+			//获取泛型的Class对象
+			clz = ((Class<T>)
+					(((ParameterizedType)(this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]));
+		}
+		return clz;
+	}
+	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	@Inject
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	protected Session getSession(){
+		return sessionFactory.getCurrentSession();
+	}
+	
 	@Override
+	public T add(T t) {
+		getSession().save(t);
+		return t;
+	}
+
+	@Override
+	public void delete(int id) {
+		getSession().delete(this.load(id));
+		
+	}
+	@Override
+	public void update(T t) {
+		getSession().update(t);
+	}
+	
+	@Override
+	public T load(int id) {
+		return (T)getSession().load(getClz(),id);
+	}
+	
+	/**
+	 * 不分页列表对象
+	 * @param hql 查询对象的hql
+	 * @param args 查询参数
+	 * @return 一组不分页的列表对象
+	 */
+	public List<T> list(String hql, Object[] args) {
+		return this.list(hql, args, null);
+	}
+	public List<T> list(String hql) {
+		return this.list(hql, null);
+	}
+	public List<T> list(String hql, Object arg) {
+		return this.list(hql, new Object[] {arg});
+	}
+	
+
+	/**
+	 * 基于别名和查询参数的混合列表对象
+	 * @param hql
+	 * @param args
+	 * @param alias 别名对象
+	 * @return
+	 */
 	public List<T> list(String hql, Object[] args, Map<String, Object> alias) {
 		hql = initSort(hql);
 		Query query = getSession().createQuery(hql);
@@ -140,20 +154,24 @@ private Class<T> clz;
 		return query.list();
 	}
 	
-	@Override
 	public List<T> listByAlias(String hql, Map<String, Object> alias) {
 		return this.list(hql, null, alias);
 	}
-	@Override
+	
+	
+	/**
+	 * 分页列表对象
+	 * @param hql 查询对象的hql
+	 * @param args 查询参数
+	 * @return 一组不分页的列表对象
+	 */
 	public Pager<T> find(String hql, Object[] args) {
 		return this.find(hql, args, null);
 	}
 	
-	@Override
 	public Pager<T> find(String hql) {
 		return this.find(hql, null);
 	}
-	@Override
 	public Pager<T> find(String hql, Object arg) {
 		return this.find(hql, new Object[]{arg});
 	}
@@ -176,7 +194,13 @@ private Class<T> clz;
 		return c;
 	}
 	
-	@Override
+	/**
+	 * 基于别名和查询参数的混合列表对象
+	 * @param hql
+	 * @param args
+	 * @param alias 别名对象
+	 * @return
+	 */
 	public Pager<T> find(String hql, Object[] args, Map<String, Object> alias) {
 		hql = initSort(hql);
 		String cq = getCountHql(hql,true);
@@ -195,25 +219,27 @@ private Class<T> clz;
 		pages.setTotal(total);
 		return pages;
 	}
-	@Override
 	public Pager<T> findByAlias(String hql, Map<String, Object> alias) {
 		return this.find(hql, null, alias);
 		
 	}
-	@Override
+	
+	/**
+	 * 根据hql查询一组对象
+	 * @param hql
+	 * @param args
+	 * @return
+	 */
 	public Object queryObject(String hql, Object[] args) {
 		return queryObject(hql, args, null);
 	}
-	@Override
 	public Object queryObject(String hql, Object arg) {
 		return queryObject(hql, new Object[]{arg});
 	}
-	@Override
 	public Object queryObject(String hql) {
 		return queryObject(hql,null);
 	}
 	
-	@Override
 	public Object queryObject(String hql, Object[] args,
 			Map<String, Object> alias) {
 		Query query = getSession().createQuery(hql);
@@ -222,40 +248,48 @@ private Class<T> clz;
 		return query.uniqueResult();
 	}
 
-	@Override
 	public Object queryObjectByAlias(String hql, Map<String, Object> alias) {
 		return queryObject(hql, null, alias);
 
 	}
-	@Override
+	
+	/**
+	 * 根据hql更新一组对象
+	 * @param hql
+	 * @param args
+	 * @return
+	 */
 	public void updateByHql(String hql, Object[] args) {
 		Query query = getSession().createQuery(hql);
 		setParameter(query, args);
 		query.executeUpdate();
 	}
-	@Override
 	public void updateByHql(String hql, Object arg) {
 		this.updateByHql(hql, new Object[]{arg});
 	}
-	@Override
 	public void updateByHql(String hql) {
 		this.updateByHql(hql, null);
 	}
-	@Override
+	
+	/**
+	 * 根据Sql查询对象，不包含关联对象
+	 * @param sql 查询sql语句
+	 * @param arts 查询条件
+	 * @param clz 查询对象
+	 * @param hasEntity 该对象是否是由hibernate管理的实体对象，如果不是使用setResultTransForm查询
+	 * @return
+	 */
 	public <N extends Object>List<N> listBySql(String sql, Object[] args, Class<?> clz,
 			boolean hasEntity) {
 		return this.listBySql(sql, args, null, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>List<N> listBySql(String sql, Object arg, Class<?> clz,
 			boolean hasEntity) {
 		return this.listBySql(sql, new Object[]{arg}, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>List<N> listBySql(String sql, Class<?> clz, boolean hasEntity) {
 		return this.listBySql(sql, null, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>List<N> listBySql(String sql, Object[] args,
 			Map<String, Object> alias, Class<?> clz, boolean hasEntity) {
 		sql = initSort(sql);
@@ -269,26 +303,31 @@ private Class<T> clz;
 		}
 		return sq.list();
 	}
-	@Override
 	public <N extends Object>List<N> listByAliasSql(String sql, Map<String, Object> alias,
 			Class<?> clz, boolean hasEntity) {
 		return this.listBySql(sql, null, alias, clz, hasEntity);
 	}
-	@Override
+	
+	
+	/**
+	 * 根据Sql查询分页对象，不包含关联对象
+	 * @param sql 查询sql语句
+	 * @param arts 查询条件
+	 * @param clz 查询对象
+	 * @param hasEntity 该对象是否是由hibernate管理的实体对象，如果不是使用setResultTransForm查询
+	 * @return
+	 */
 	public <N extends Object>Pager<N> findBySql(String sql, Object[] args, Class<?> clz,
 			boolean hasEntity) {
 		return this.findBySql(sql, args, null, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>Pager<N> findBySql(String sql, Object arg, Class<?> clz,
 			boolean hasEntity) {
 		return this.findBySql(sql, new Object[]{arg}, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>Pager<N> findBySql(String sql, Class<?> clz, boolean hasEntity) {
 		return this.findBySql(sql, null, clz, hasEntity);
 	}
-	@Override
 	public <N extends Object>Pager<N> findBySql(String sql, Object[] args,
 			Map<String, Object> alias, Class<?> clz, boolean hasEntity) {
 		
@@ -314,7 +353,6 @@ private Class<T> clz;
 		return pages;
 
 	}
-	@Override
 	public <N extends Object>Pager<N>findByAliasSql(String sql, Map<String, Object> alias,
 			Class<?> clz, boolean hasEntity) {
 		return this.findBySql(sql, null, alias, clz, hasEntity);

@@ -66,6 +66,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
 		
 		User u = (User)userDao.load(1);
+		
 		EntitiesHelper.assertUser(u);
 	}
 	
@@ -87,7 +88,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		PageContext.setOrder("desc");
 		PageContext.setSort("id");
 		
-		List<User> expected = userDao.list("from User where id >? and id <?",new Object[]{1,4});
+		List<User> expected = userDao.listTest("from User where id >? and id <?",new Object[]{1,4});
 		List<User> actuals = Arrays.asList(new User(3,"admin3"),new User(2,"admin2"));
 		
 		EntitiesHelper.assertUsers(expected, actuals);
@@ -104,7 +105,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Map<String,Object> alias = new HashMap<String,Object>();
 		alias.put("ids", Arrays.asList(1,2,3,5,6,7,8,9,10));
 		
-		List<User> expected = userDao.list("from User where id >? and id <? and id in (:ids)",new Object[]{1,5},alias);
+		List<User> expected = userDao.listTest("from User where id >? and id <? and id in (:ids)",new Object[]{1,5},alias);
 		List<User> actuals = Arrays.asList(new User(2,"admin2"),new User(3,"admin3"));
 		
 		Assert.assertNotNull(expected);
@@ -122,7 +123,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		PageContext.setPageSize(2);
 		PageContext.setPageOffset(0);
 		
-		Pager<User> expected = userDao.find("from User where id >=? and id <=? ",new Object[]{1,10});
+		Pager<User> expected = userDao.findTest("from User where id >=? and id <=? ",new Object[]{1,10});
 		List<User> actuals = Arrays.asList(new User(10,"admin10"),new User(9,"admin9"));
 		
 		Assert.assertNotNull(expected);
@@ -143,7 +144,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Map<String,Object> alias = new HashMap<String,Object>();
 		alias.put("ids", Arrays.asList(1,2,3,5,6,7,9,10));
 		
-		Pager<User> expected = userDao.find("from User where id >=? and id <=?  and id in(:ids)",new Object[]{1,10},alias);
+		Pager<User> expected = userDao.findTest("from User where id >=? and id <=?  and id in(:ids)",new Object[]{1,10},alias);
 		List<User> actuals = Arrays.asList(new User(10,"admin10"),new User(9,"admin9"),new User(7,"admin7"));
 		
 		Assert.assertNotNull(expected);
@@ -160,7 +161,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		PageContext.setOrder("desc");
 		PageContext.setSort("id");
 		
-		List<User> expected = userDao.listBySql("select * from t_user  where id >? and id <?",new Object[]{1,4},User.class,true);
+		List<User> expected = userDao.listBySqlTest("select * from t_user  where id >? and id <?",new Object[]{1,4},User.class,true);
 		List<User> actuals = Arrays.asList(new User(3,"admin3"),new User(2,"admin2"));
 		
 		EntitiesHelper.assertUsers(expected, actuals);
@@ -177,7 +178,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Map<String,Object> alias = new HashMap<String,Object>();
 		alias.put("ids", Arrays.asList(1,2,3,5,6,7,8,9,10));
 		
-		List<User> expected = userDao.listBySql("select * from t_user where id >? and id <? and id in (:ids)",new Object[]{1,5},alias,User.class,true);
+		List<User> expected = userDao.listBySqlTest("select * from t_user where id >? and id <? and id in (:ids)",new Object[]{1,5},alias,User.class,true);
 		List<User> actuals = Arrays.asList(new User(2,"admin2"),new User(3,"admin3"));
 		
 		Assert.assertNotNull(expected);
@@ -196,7 +197,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		PageContext.setPageSize(2);
 		PageContext.setPageOffset(0);
 		
-		Pager<User> expected = userDao.findBySql("select * from t_user where id >=? and id <=? ",new Object[]{1,10},User.class,true);
+		Pager<User> expected = userDao.findBySqlTest("select * from t_user where id >=? and id <=? ",new Object[]{1,10},User.class,true);
 		List<User> actuals = Arrays.asList(new User(10,"admin10"),new User(9,"admin9"));
 		
 		Assert.assertNotNull(expected);
@@ -217,7 +218,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Map<String,Object> alias = new HashMap<String,Object>();
 		alias.put("ids", Arrays.asList(1,2,3,5,6,7,9,10));
 		
-		Pager<User> expected = userDao.findBySql("select * from t_user where id >=? and id <=?  and id in(:ids)",new Object[]{1,10},alias,User.class,true);
+		Pager<User> expected = userDao.findBySqlTest("select * from t_user where id >=? and id <=?  and id in(:ids)",new Object[]{1,10},alias,User.class,true);
 		List<User> actuals = Arrays.asList(new User(10,"admin10"),new User(9,"admin9"),new User(7,"admin7"));
 		
 		Assert.assertNotNull(expected);

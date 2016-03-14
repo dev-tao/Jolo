@@ -55,7 +55,7 @@ public class UserService implements IUserService {
 	public void add(User user, Integer[] rids, Integer[] gids) {
 		User tmpUser = userDao.loadByUsername(user.getUsername());
 		if (tmpUser!=null) throw new CmsException("添加的用户对象已经存在，不能添加");
-
+		
 		
 	}
 
