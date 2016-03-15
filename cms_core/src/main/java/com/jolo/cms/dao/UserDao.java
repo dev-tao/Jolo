@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.jolo.basic.dao.BaseDao;
+import com.jolo.basic.model.Pager;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
 import com.jolo.cms.model.RoleType;
@@ -77,6 +78,56 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 		return this.list(hql,groupId);
 	}
 
+	@Override
+	public void addUserGroup(User user, Group g) {
+		UserGroup ug = this.loadUserGroup(user.getId(), g.getId());
+		if(ug!=null) return;
+		ug = new UserGroup();
+		ug.setUser(user);
+		ug.setGroup(g);
+		this.getSession().save(ug);
+	}
 
+	@Override
+	public void addUserRole(User user, Role r) {
+		UserRole ur = this.loadUserRole(user.getId(), r.getId());
+		if(ur!=null)  return;
+		ur = new UserRole();
+		ur.setRole(r);
+		ur.setUser(user);
+		this.getSession().save(ur);
+	}
+
+	@Override
+	public void deleteUserGroups(int id) {
+		String hql = "delete UserGroup ug where ug.user.id = ?";
+		this.updateByHql(hql, id);
+	}
+
+	@Override
+	public void deleteUserRoles(int id) {
+		String hql = "delete UserRole ur where ur.user.id=?";
+		this.updateByHql(hql, id);
+	}
+
+	@Override
+	public void deleteUserRole(int uid, int rid) {
+		String hql = "delete UserRole ur where ur.user.id=? and ur.role.id=?";
+		this.updateByHql(hql, new Object[]{uid,rid});
+		
+	}
+
+	@Override
+	public void deleteUserGroup(int uid, int gid) {
+		String hql = "delete UserGroup ug where ug.user.id = ? and ug.group.id =?";
+		this.updateByHql(hql, new Object[]{uid,gid});
+		
+	}
+
+	@Override
+	public Pager<User> findUser() {
+		String hql = "from User";
+		return this.find(hql);
+	}
 	
 }

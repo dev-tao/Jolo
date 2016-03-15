@@ -47,12 +47,6 @@ public interface IUserService {
 	public void udpatePwd(int uid,String oldPwd, String newPwd);
 	
 	/**
-	 * 更新用户状态
-	 * @param id
-	 */
-	public void updateState(int id);
-	
-	/**
 	 * 列表用户
 	 * @return
 	 */
@@ -77,7 +71,7 @@ public interface IUserService {
 	 * @param id
 	 * @return
 	 */
-	public List<Group> listUserGroup(int id);
+	public List<Group> listUserGroups(int id);
 	
 	public List<Integer> listUserRoleIds(int id);
 	
@@ -86,4 +80,11 @@ public interface IUserService {
 	public List<User> listRoleUsers(int rid);
 	
 	public List<User> listGroupUser(int gid);
+	
+	/**
+	 * 更新用户状态
+	 * @param id
+	 */
+	public void updateStatus(int id);
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.jolo.basic.dao.IBaseDao;
+import com.jolo.basic.model.Pager;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
 import com.jolo.cms.model.RoleType;
@@ -87,7 +88,52 @@ public interface IUserDao extends IBaseDao<User>{
 	 * @return
 	 */
 	public List<User> listGroupUsers(int groupId);
+
+	/**
+	 * 增加用户组
+	 * @param user
+	 * @param g
+	 */
+	public void addUserGroup(User user, Group g);
+
+	/**
+	 * 增加用户角色
+	 * @param user
+	 * @param r
+	 */
+	public void addUserRole(User user, Role r);
+
+	/**
+	 * 删除用户的全部组
+	 * @param id
+	 */
+	public void deleteUserGroups(int id);
+
+	/**
+	 * 删除用户的全部角色
+	 * @param id
+	 */
+	public void deleteUserRoles(int id);
 	
+	/**
+	 * 删除用户的某个角色
+	 * @param uid
+	 * @param rid
+	 */
+	public void deleteUserRole(int uid,int rid);
+	
+	/**
+	 * 删除用户的某个组
+	 * @param uid
+	 * @param gid
+	 */
+	public void deleteUserGroup(int uid,int gid);
+	
+	/**
+	 * 查找用户
+	 * @return
+	 */
+	public Pager<User> findUser() ;
 	
 	
 }
