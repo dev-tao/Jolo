@@ -25,6 +25,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import com.jolo.basic.model.PageContext;
+import com.jolo.basic.model.Pager;
+import com.jolo.cms.dao.IGroupDao;
+import com.jolo.cms.dao.IRoleDao;
 import com.jolo.cms.dao.IUserDao;
 import com.jolo.cms.model.Group;
 import com.jolo.cms.model.Role;
@@ -44,6 +48,12 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Inject
 	private IUserDao userDao;
+	
+	@Inject
+	private IGroupDao groupDao;
+	
+	@Inject
+	private IRoleDao roleDao;
 	
 	@Inject
 	private SessionFactory sessionFactory;
@@ -151,39 +161,65 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testAddUserGroup(){
-		 
-		
-		
+		 Group group = groupDao.load(1);
+		 User user = userDao.load(1);
+		 userDao.addUserGroup(user,group);
+		 UserGroup ug = userDao.loadUserGroup(1, 1);
+		Assert.assertNotNull(ug);
+		Assert.assertEquals(ug.getUser().getId(), 1);
+		Assert.assertEquals(ug.getGroup().getId(), 1);
 	}
 	
 	@Test
 	public void testAddUserRole(){
-		
+		User user = userDao.load(1);
+		Role role = roleDao.load(1);
+		userDao.addUserRole(user, role);
+		UserRole ur = userDao.loadUserRole(1, 1);
+		Assert.assertNotNull(ur);
+		Assert.assertEquals(ur.getRole().getId(), 1);
+		Assert.assertEquals(ur.getUser().getId(), 1);
 	}
 	
 	@Test
 	public void testDeleteUserGroups(){
-		
+		userDao.deleteUserGroups(1);
+		List<Group> groups= userDao.listUserGroups(1);
+		Assert.assertTrue(groups.size()<=0);
 	}
 	
 	@Test
 	public void testDeleteUserRoles(){
-		
+		userDao.deleteUserRoles(1);
+		List<Role> roles = userDao.listUserRoles(1);
+		Assert.assertTrue(roles.size()<=0);
 	}
 	
 	@Test
 	public void testDeleteUserRole(){
-		
+		userDao.deleteUserRole(1,1);
+		UserRole ur = userDao.loadUserRole(1, 1);
+		Assert.assertNull(ur);
 	}
 	
 	@Test
 	public void testDeleteUserGroup(){
-		
+		userDao.deleteUserGroup(1, 1);
+		UserGroup ug = userDao.loadUserGroup(1, 1);
+		Assert.assertNull(ug);
 	}
 	
 	@Test
 	public void testFindUser(){
-		
+		PageContext.setPageOffset(0);
+		PageContext.setPageOffset(15);
+		List<User> expectdUsers = Arrays.asList(new User(1,"admin1","123","admin1","admin1@admin.com","110",1),
+				   new User(2,"admin2","123","admin1","admin1@admin.com","110",1),
+				   new User(3,"admin3","123","admin1","admin1@admin.com","110",1));
+		Pager<User> actualsUsers = userDao.findUser();
+		Assert.assertNotNull(actualsUsers);
+		Assert.assertEquals(actualsUsers.getTotal(),3);
+		EntitiesHelper.assertUsers(actualsUsers.getDatas(), expectdUsers);
 	}
 	
 	
