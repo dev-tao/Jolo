@@ -36,7 +36,8 @@ public class Group {
 		this.name = name;
 		this.description = desc;
 	}
-	
+
+
 	@Id
 	@GeneratedValue
 	public int getId() {
