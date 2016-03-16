@@ -49,10 +49,12 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	private SessionFactory sessionFactory;
 	
 	@Before
-	public void setUp() throws DataSetException, SQLException, IOException{
+	public void setUp() throws SQLException, IOException, DatabaseUnitException{
 		Session s = sessionFactory.openSession();  //打开一个新的session
 		TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(s));  //将session绑定到事务异步管理器中 
 		backupAllTable();
+		IDataSet ds = createDateSet("dataset");
+		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
 	}
 	
 	@After
@@ -66,9 +68,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListUserRoles() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		List<Role> actuals = userDao.listUserRoles(2);
 		List<Role>  expected= Arrays.asList(new Role(2,"发布人",RoleType.ROLE_PUBLISH),new Role(3,"审核人",RoleType.ROLE_AUDIT));
 		
@@ -77,9 +76,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListUserRolesId() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		int userId = 2;
 		List<Integer>actual =  userDao.listUserRolesId(userId);
 		List<Integer> expected = Arrays.asList(2,3);
@@ -89,9 +85,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListUserGroups() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 	    List<Group> actual = userDao.listUserGroups(2);
 	    List<Group> expected = Arrays.asList(new Group(1,"财务处","负责财务部门网站"),new Group(2,"计科系","负责计科系网站"),new Group(3,"宣传部","负责宣传部网站"));
 	    
@@ -100,9 +93,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListUserGroupsIds() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		List<Integer> actual = userDao.listUserGroupsIds(2);
 		List<Integer> expected = Arrays.asList(1,2,3);
 		Assert.assertEquals(expected, actual);
@@ -110,9 +100,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testLoadUserRole() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		UserRole actual = userDao.loadUserRole(2, 3);
 		User eu = new User(2,"admin2","123","admin2","admin2@email.com","120",1);
 		Role er = new Role(3,"审核人",RoleType.ROLE_AUDIT);
@@ -123,9 +110,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testLoadUserGroup() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		UserGroup actual= userDao.loadUserGroup(2, 1);
 		User eu = new User(2,"admin2","123","admin2","admin2@email.com","120",1);
 		Group eg = new Group(1,"财务处","负责财务部门网站");
@@ -136,9 +120,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testLoadByUsername() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		User actual = userDao.loadByUsername("admin2");
 		User expected = new User(2,"admin2","123","admin2","admin2@email.com","120",1);
 		EntitiesHelper.assertUser(expected,actual);
@@ -147,9 +128,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListRoleUsers() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		List<User> actual = userDao.listRoleUsers(2);
 		List<User> expected = Arrays.asList(new User(2,"admin2","123","admin2","admin2@email.com","120",1),new User(3,"admin3","123","admin3","admin3@email.com","130",1));
 		
@@ -158,9 +136,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListRoleUsersByType() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		List<User> actual = userDao.listRoleUsers(RoleType.ROLE_AUDIT);
 		List<User> expected = Arrays.asList(new User(2,"admin2","123","admin2","admin2@email.com","120",1));
 		EntitiesHelper.assertUsers(expected, actual);
@@ -168,13 +143,48 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testListGroupUsers() throws DatabaseUnitException, SQLException{
-		IDataSet ds = createDateSet("dataset");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, ds);
-		
 		List<User> actual = userDao.listGroupUsers(3);
 		List<User> expected = Arrays.asList(new User(2,"admin2","123","admin2","admin2@email.com","120",1),new User(3,"admin3","123","admin3","admin3@email.com","130",1));
 
 		EntitiesHelper.assertUsers(expected, actual);
 	}
+	
+	@Test
+	public void testAddUserGroup(){
+		 
+		
+		
+	}
+	
+	@Test
+	public void testAddUserRole(){
+		
+	}
+	
+	@Test
+	public void testDeleteUserGroups(){
+		
+	}
+	
+	@Test
+	public void testDeleteUserRoles(){
+		
+	}
+	
+	@Test
+	public void testDeleteUserRole(){
+		
+	}
+	
+	@Test
+	public void testDeleteUserGroup(){
+		
+	}
+	
+	@Test
+	public void testFindUser(){
+		
+	}
+	
 	
 }
