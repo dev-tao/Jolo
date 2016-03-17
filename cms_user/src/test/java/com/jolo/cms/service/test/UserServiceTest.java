@@ -91,7 +91,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testFindUser() {
-		//
+		//easy mock第一个测试
 		EasyMock.reset(userDao);
 		EasyMock.expect(userDao.findUser()).andReturn(new Pager<User>());
 		EasyMock.replay(userDao);
