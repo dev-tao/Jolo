@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 
 import javax.inject.Inject;
 
+
+
 import org.easymock.EasyMock;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,18 +35,18 @@ import com.jolo.cms.service.UserService;
 public class UserServiceTest {
 
 	@Inject
-	IUserService userService;
+	private IUserService userService;
 	
 	@Inject
-	IUserDao userDao;
+	private IUserDao userDao;
 	
 	@Inject
-	IGroupDao groupDao;
+	private IGroupDao groupDao;
 	
 	@Inject
-	IRoleDao roleDao;
-	
-	
+	private IRoleDao roleDao;
+
+	private User baseUser = new User(1,"admin1","123","admin1","admin1@","123",0);
 	
 	
 	
@@ -71,7 +74,17 @@ public class UserServiceTest {
 
 	@Test
 	public void testDelete() {
-		fail("Not yet implemented");
+		EasyMock.reset(userDao);
+		int uid = 2;
+		userDao.deleteUserGroups(uid);
+		EasyMock.expectLastCall();
+		userDao.deleteUserRoles(uid);
+		EasyMock.expectLastCall();
+		userDao.delete(uid);
+		EasyMock.expectLastCall();
+		EasyMock.replay(userDao);
+		userService.delete(uid);
+		EasyMock.verify(userDao);
 	}
 
 	@Test
@@ -136,7 +149,16 @@ public class UserServiceTest {
 
 	@Test
 	public void testUpdateStatus() {
-		fail("Not yet implemented");
+		int uid = 2;
+		EasyMock.reset(userDao);
+		EasyMock.expect(userDao.load(uid)).andReturn(baseUser);
+		userDao.update(baseUser);
+		EasyMock.expectLastCall();
+		EasyMock.replay(userDao);
+		userService.updateStatus(uid);
+		Assert.assertEquals(baseUser.getStatus(), 1);
+		EasyMock.verify(userDao);
+		
 	}
 
 }
