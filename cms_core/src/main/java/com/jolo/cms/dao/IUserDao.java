@@ -29,7 +29,7 @@ public interface IUserDao extends IBaseDao<User>{
 	 * @param userId
 	 * @return
 	 */
-	public List<Integer> listUserRolesId(int userId);
+	public List<Integer> listUserRolesIds(int userId);
 	
 	/**
 	 * 获取用户的所有组信息

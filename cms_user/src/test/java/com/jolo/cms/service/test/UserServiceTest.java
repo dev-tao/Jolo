@@ -2,7 +2,12 @@ package com.jolo.cms.service.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Inject;
+
+
 
 
 
@@ -61,13 +66,37 @@ public class UserServiceTest {
 
 	@Test
 	public void testAdd() {
-		
+		EasyMock.reset(userDao,roleDao,groupDao);
 		Integer[] rids = {1,2};
-		Integer[] gids = {1,2};
+		Integer[] gids = {2,3};
 		Role r = new Role(1,"管理员",RoleType.ROLE_ADMIN);
 		Group g = new Group(2,"财务处","");
-		User user = new User(2,"admin2","123","admin2","admin2@email.com","120",1);
-		userService.add(user, rids, gids);
+		EasyMock.expect(userDao.loadByUsername("admin1")).andReturn(null);
+		EasyMock.expect(userDao.add(baseUser)).andReturn(baseUser);
+		
+		EasyMock.expect(roleDao.load(rids[0])).andReturn(r);
+		userDao.addUserRole(baseUser, r);
+		EasyMock.expectLastCall();
+		
+		r.setId(2);
+		EasyMock.expect(roleDao.load(rids[1])).andReturn(r);
+		userDao.addUserRole(baseUser, r);
+		EasyMock.expectLastCall();
+		
+		EasyMock.expect(groupDao.load(gids[0])).andReturn(g);
+		userDao.addUserGroup(baseUser, g);
+		EasyMock.expectLastCall();
+		
+		g.setId(3);
+		EasyMock.expect(groupDao.load(gids[1])).andReturn(g);
+		userDao.addUserGroup(baseUser, g);
+		EasyMock.expectLastCall();
+		
+		EasyMock.replay(userDao,roleDao,groupDao);
+		
+		userService.add(baseUser, rids, gids);
+		
+		EasyMock.verify(userDao,roleDao,groupDao);
 		
 		
 	}
@@ -88,18 +117,34 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testUdpate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testUpdate() {
-		fail("Not yet implemented");
-	}
+		EasyMock.reset(userDao,roleDao,groupDao);
+		Integer[] nids = {1,2};
+		List<Integer> eids = Arrays.asList(2,3);
+		Role r = new Role(1,"管理员",RoleType.ROLE_ADMIN);
+		Group g = new Group(1,"财务处","");
+		
+		//验证获取存在的角色id和组id
+		EasyMock.expect(userDao.listUserRolesIds(baseUser.getId())).andReturn(eids);
+		EasyMock.expect(userDao.listUserGroupsIds(baseUser.getId())).andReturn(eids);
+		EasyMock.expect(roleDao.load(1)).andReturn(r);
+		//验证添加角色和组是否正确
+		EasyMock.expect(groupDao.load(1)).andReturn(g);
+		userDao.addUserRole(baseUser,r);
+		EasyMock.expectLastCall();
+		userDao.addUserGroup(baseUser, g);
+		EasyMock.expectLastCall();
 
-	@Test
-	public void testUdpatePwd() {
-		fail("Not yet implemented");
+		//验证删除角色和组是否正确
+		userDao.deleteUserRole(baseUser.getId(),3);
+		EasyMock.expectLastCall();
+		userDao.deleteUserGroup(baseUser.getId(),3);
+		EasyMock.expectLastCall();
+		
+		EasyMock.replay(userDao,roleDao,groupDao);
+		userService.update(baseUser,nids,nids);
+		
+		EasyMock.verify(userDao,roleDao,groupDao);
 	}
 
 	@Test
@@ -110,41 +155,6 @@ public class UserServiceTest {
 		EasyMock.replay(userDao);
 		userService.findUser();
 		EasyMock.verify(userDao);
-	}
-
-	@Test
-	public void testLoad() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListUserRoles() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListUserGroups() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListUserRoleIds() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListUserGroupIds() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListRoleUsers() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testListGroupUser() {
-		fail("Not yet implemented");
 	}
 
 	@Test

@@ -24,7 +24,7 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	}
 
 	@Override
-	public List<Integer> listUserRolesId(int userId) {
+	public List<Integer> listUserRolesIds(int userId) {
 		String hql = "select ur.role.id from UserRole ur where ur.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0, userId).list();
 	}

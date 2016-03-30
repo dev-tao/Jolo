@@ -34,7 +34,7 @@ public interface IUserService {
 	 * @param rids
 	 * @param gids
 	 */
-	public void udpate(User user,Integer[] rids,Integer[] gids);
+	public void update(User user,Integer[] rids,Integer[] gids);
 	
 	public void update(User user);
 	
@@ -44,7 +44,7 @@ public interface IUserService {
 	 * @param oldPwd
 	 * @param newPwd
 	 */
-	public void udpatePwd(int uid,String oldPwd, String newPwd);
+	public void updatePwd(int uid,String oldPwd, String newPwd);
 	
 	/**
 	 * 列表用户

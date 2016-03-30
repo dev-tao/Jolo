@@ -95,9 +95,9 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void udpate(User user, Integer[] rids, Integer[] gids) {
+	public void update(User user, Integer[] rids, Integer[] gids) {
 		//1. 获取用户已经存在的角色ID和组ID
-		List<Integer> erids = userDao.listUserRolesId(user.getId());
+		List<Integer> erids = userDao.listUserRolesIds(user.getId());
 		List<Integer> egids = userDao.listUserGroupsIds(user.getId());
 		
 		//2.判断erids中不存在rids就要添加
@@ -130,7 +130,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void udpatePwd(int uid, String oldPwd, String newPwd) {
+	public void updatePwd(int uid, String oldPwd, String newPwd) {
 		// TODO Auto-generated method stub
 
 	}
@@ -158,7 +158,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<Integer> listUserRoleIds(int id) {
-		return userDao.listUserRolesId(id);
+		return userDao.listUserRolesIds(id);
 	}
 
 	@Override

@@ -87,7 +87,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	@Test
 	public void testListUserRolesId() throws DatabaseUnitException, SQLException{
 		int userId = 2;
-		List<Integer>actual =  userDao.listUserRolesId(userId);
+		List<Integer>actual =  userDao.listUserRolesIds(userId);
 		List<Integer> expected = Arrays.asList(2,3);
 		Assert.assertEquals(expected, actual);
 		
